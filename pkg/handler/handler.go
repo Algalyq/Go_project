@@ -17,9 +17,10 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	//  gin.SetMode(gin.ReleaseMode)
 	 router := gin.New()
 
-	 auth := router.Group("/auth", h.signup)
+	 auth := router.Group("/auth")
 	 {
-		auth.GET("/signup")
+		auth.POST("/signup",h.signup)
+		auth.POST("/signin",h.signin)
 	 }
 
 	 return router
