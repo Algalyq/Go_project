@@ -7,7 +7,7 @@ export default function Registration(){
          <div className="login-part">
                 <span className="login-part--text">
                     <h2>Login</h2>
-                    <p>Enter Login details to get access</p>
+                    <p>Create your account to get full access</p>
                 </span>
 
                 <form className="form">
