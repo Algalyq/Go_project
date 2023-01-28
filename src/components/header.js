@@ -26,12 +26,11 @@ function Header(){
 					</ul>
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-						<li><Link class="nav-link" href="#"><img src={user} alt="logo"/></Link></li>
+						<li><Link class="nav-link" to="/login"><img src={user} alt="logo"/></Link></li>
 						<li><Link class="nav-link" href="cart.html"><img src={cart} alt="logo"/></Link></li>
 					</ul>
 				</div>
 			</div>
-				
 		</nav>
      )
 }

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap');
+
 @import url('./bootstrap.min.css');
 @import url('./style.css');
 @import url('./tiny-slider.css');
+@import url('./login.css');
