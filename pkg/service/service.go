@@ -6,6 +6,7 @@ import ("github.com/Algalyq/Go_project/pkg/repository"
 type Authorization interface {
 	CreateUser(user goproject.User) (int, error)
 	GenerateToken(username, password string) (string, error)
+	ParseToken(token string) (int, error)
 }
 
 type Service struct {
