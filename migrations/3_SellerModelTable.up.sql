@@ -5,5 +5,8 @@ CREATE TABLE seller (
     user_password varchar(255) not null,
     mobile_number varchar(255) not null unique,
     email varchar(255) not null,
-    card_number varchar(255) not null)
+    card_number varchar(255) not null,
+    
+    PRIMARY KEY (id)
+    )
 
