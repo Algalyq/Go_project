@@ -8,12 +8,18 @@ import Service from "./pages/service";
 import Contact from "./pages/contact";
 import Login from "./components/login";
 import Registration from "./components/registration";
+import {Provider} from 'react-redux'
+import configureStore from './store';
+import FurniturePanel from "./admin/furniturePanel";
+
+const store = configureStore();
 
 function App() {
   let location = useLocation();
   return (
+    <Provider store={store}>
     <div className="App">
-         {location.pathname !== '/login' && location.pathname !== '/register' && <Header/>}
+         {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/admin' && <Header/>}
          <Routes>
 
             <Route path='/' element={<Main/>}/>
@@ -22,11 +28,13 @@ function App() {
             <Route path="/services" element={<Service key={location.pathname}/>}/>      
             <Route path="/contact" element={<Contact key={location.pathname}/>}/>  
           <Route path='/login' element={<Login key={location.pathname} />}/>    
-          <Route path='/register' element={<Registration key={location.pathname} />}/>    
+          <Route path='/register' element={<Registration key={location.pathname} />}/> 
+          <Route path="/admin" element={<FurniturePanel key={location.pathname}/>}/>  
         </Routes>
-        {location.pathname !== '/login' && location.pathname !== '/register' && <Footer/>}
+        {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/admin' &&  <Footer/>}
          
     </div>
+    </Provider>
   );
 }
 
