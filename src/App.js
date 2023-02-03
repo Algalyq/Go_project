@@ -11,6 +11,7 @@ import Registration from "./components/registration";
 import {Provider} from 'react-redux'
 import configureStore from './store';
 import FurniturePanel from "./admin/furniturePanel";
+import Admin from "./admin";
 
 const store = configureStore();
 
@@ -19,9 +20,8 @@ function App() {
   return (
     <Provider store={store}>
     <div className="App">
-         {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/admin' && <Header/>}
+         {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/admin'  && location.pathname !== '/admin/furniture'  && <Header/>}
          <Routes>
-
             <Route path='/' element={<Main/>}/>
             <Route path='/shop' element={<Shop key={location.pathname}/>}/>      
             <Route path='/info' element={<Info key={location.pathname}/>}/>
@@ -29,9 +29,12 @@ function App() {
             <Route path="/contact" element={<Contact key={location.pathname}/>}/>  
           <Route path='/login' element={<Login key={location.pathname} />}/>    
           <Route path='/register' element={<Registration key={location.pathname} />}/> 
-          <Route path="/admin" element={<FurniturePanel key={location.pathname}/>}/>  
+          <Route path='admin' element={<Admin/>}>
+            <Route path='' element={<FurniturePanel/>} />
+            <Route path='furniture' element={<FurniturePanel />}/>
+          </Route>
         </Routes>
-        {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/admin' &&  <Footer/>}
+        {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/admin'  && location.pathname !== '/admin/furniture' &&  <Footer/>}
          
     </div>
     </Provider>
