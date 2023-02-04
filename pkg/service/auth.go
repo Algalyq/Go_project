@@ -31,7 +31,10 @@ func newAuthService(repo repository.Authorization) *AuthService {
 
 func (a *AuthService) CreateUser(user goproject.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)	 
-    return a.repo.CreateUser(user)
+	user.Confirmpassword = generatePasswordHash(user.Confirmpassword)
+	return a.repo.CreateUser(user)	
+	
+	
 }
 
 func (a *AuthService) GenerateToken(username,password string) (string, error) {

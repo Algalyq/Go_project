@@ -14,14 +14,19 @@ func (h *Handler) signup(c *gin.Context){
 			newErrorResponse(c,http.StatusBadRequest, err.Error())
 			return
 	}
-	id, err := h.services.Authorization.CreateUser(input)
+	
+	if err := h.validate(c,input); err == 1{
+	msg, err := h.services.Authorization.CreateUser(input)
 	if err!= nil {
 		newErrorResponse(c,http.StatusBadRequest, err.Error())
-		return
+		return 
 	}
 	c.JSON(http.StatusOK,map[string]interface{}{
-		"id":id,
+		"msg":msg,
+		"status":http.StatusOK,
 	})
+}
+	
 }
 
 type signInInput struct {
