@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class FurniConfig(AppConfig):
+class furniConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Furni'
+    name = 'furni'
