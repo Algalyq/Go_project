@@ -29,6 +29,10 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			authList.POST("/",h.createList)
 		}
 	 }
+	 search := router.Group("/products")
+	 {
+		search.GET("/search",h.Search)
+	 }
 
 	
 	 return router

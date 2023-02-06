@@ -1,0 +1,43 @@
+package repository
+
+import (
+	"fmt"
+
+	"github.com/Algalyq/Go_project"
+	"github.com/jmoiron/sqlx"
+	"gorm.io/driver/postgres"
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+)
+
+
+type SearchPostgres struct {
+	dba *sqlx.DB
+}
+
+
+func NewSearchPostgres(dba *sqlx.DB) *SearchPostgres {
+	return &SearchPostgres{dba:dba}
+}
+
+
+func (a *SearchPostgres) GetSearchingProduct(c *gin.Context) ([]goproject.Products, error) {
+	dsn := "host=localhost user=docker password=docker dbname=test_db port=7558 sslmode=disable"
+	
+	db,err := gorm.Open(postgres.Open(dsn),&gorm.Config{})
+	var products []goproject.Products
+		
+	if err != nil {
+		panic("Could not connect to the database")
+	}
+		sql := "SELECT id,producttitle,price,quantity,pddesc FROM furni_products"
+		
+		if s := c.Query("s"); s != "" {
+			sql = fmt.Sprintf("%s WHERE producttitle LIKE '%%%s%%' OR pddesc LIKE '%%%s%%'", sql, s, s)
+		}
+		db.Raw(sql).Scan(&products)
+
+		return products,nil
+}
+
+
