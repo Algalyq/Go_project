@@ -12,6 +12,7 @@ import {Provider} from 'react-redux'
 import configureStore from './store';
 import FurniturePanel from "./admin/furniturePanel";
 import Admin from "./admin";
+import Review from "./pages/review";
 
 const store = configureStore();
 
@@ -33,6 +34,7 @@ function App() {
             <Route path='' element={<FurniturePanel/>} />
             <Route path='furniture' element={<FurniturePanel />}/>
           </Route>
+          <Route path="/review" element={<Review />}/>
         </Routes>
         {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/admin'  && location.pathname !== '/admin/furniture' &&  <Footer/>}
          

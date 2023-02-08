@@ -1,0 +1,70 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap');
+
+.review{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 3% 5%;
+    box-sizing: border-box;
+    gap: 40px;
+}
+
+.review_product{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.product-action{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.review_product h1, .review_product h2{
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+.review_product p{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    line-height: 15px;
+
+}
+
+.review_product p img{
+    width: 15px;
+    height: 15px;
+}
+
+.product-action button{
+    background-color: #2F2F2F;
+    color: #fff;
+    width: 150px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: transparent;
+}
+
+.review-comment{
+    width: 100%;
+    background-color: #e2e2e2;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.review-comment h1{
+    color: #000;
+    font-family: 'Jost', sans-serif;
+}
+
+
+.ant-modal-body{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
