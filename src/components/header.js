@@ -1,9 +1,18 @@
 import { Link } from 'react-router-dom';
 import cart from '../images/cart.svg';
 import user from '../images/user.svg';
+import search from '../images/search.svg';
+import Aside from './aside';
+import { useState } from 'react';
 
 
 function Header(){
+	const [opened, setOpened] = useState(false);
+     
+	function onChangeOpen(){
+         setOpened(true);
+	}
+
      return(
         <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
@@ -28,9 +37,11 @@ function Header(){
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 						<li><Link class="nav-link" to="/login"><img src={user} alt="logo"/></Link></li>
 						<li><Link class="nav-link"  to="/admin"><img src={cart} alt="logo"/></Link></li>
+						<li><a onClick={onChangeOpen}><img src={search} alt="Search"/></a></li>
 					</ul>
 				</div>
 			</div>
+			<Aside opened={opened} setOpened={setOpened}></Aside>
 		</nav>
      )
 }

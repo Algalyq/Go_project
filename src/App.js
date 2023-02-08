@@ -13,6 +13,7 @@ import configureStore from './store';
 import FurniturePanel from "./admin/furniturePanel";
 import Admin from "./admin";
 import Review from "./pages/review";
+import Aside from "./components/aside";
 
 const store = configureStore();
 

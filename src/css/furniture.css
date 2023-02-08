@@ -122,3 +122,21 @@
     background-color: #fff !important;
     padding-left: 20px !important;
 }
+
+
+.navbar-nav{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.navbar-nav li{
+    margin: 0 !important;
+    padding: 0;
+}
+
+.navbar-nav li a>img{
+      width: 25px;
+      height: 25px;
+}
+
