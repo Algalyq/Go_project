@@ -15,7 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from furni import views
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('products/', views.ProductsListView.as_view()),
+    path('products/<int:pk>/', views.ProductsDetailView.as_view()),
+    path('review/',views.ReviewCreateView.as_view()),
+    path('rating/', views.AddStarRatingView.as_view())
+
 ]
+

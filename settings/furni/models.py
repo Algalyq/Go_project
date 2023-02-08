@@ -34,8 +34,28 @@ class Products(models.Model):
     imageNo3 = models.FileField(upload_to='uploads/',blank=True,null=False)
     imageNo4 = models.FileField(upload_to='uploads/',blank=True,null=False)
     imageNo5 = models.FileField(upload_to='uploads/',blank=True,null=False)
-
+    
+   
 class Comments(models.Model):
+  
+    producttitle=models.ForeignKey('Products',on_delete=models.CASCADE, related_name='review')
     ProductID = models.ForeignKey('Products',on_delete=models.CASCADE)
     UserID = models.ForeignKey('CustomUser',on_delete=models.CASCADE)
     BodyComment = models.TextField()
+    
+class RatingStar(models.Model):
+    value=models.SmallIntegerField("Value:", default=0)
+
+    def __str__(self):
+        return f'{self.value}'
+
+    class Meta:
+        verbose_name = "Star of rating"
+        verbose_name_plural = "Star of rating"
+        ordering = ["-value"]
+
+class Rating(models.Model):
+    ip= models.CharField("IP address", max_length=15)
+    star = models.ForeignKey('RatingStar',on_delete=models.CASCADE, verbose_name="star")
+    ProductID = models.ForeignKey('Products',on_delete=models.CASCADE,verbose_name="furniture", related_name='ratings' )
+    

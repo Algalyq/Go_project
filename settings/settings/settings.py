@@ -1,6 +1,7 @@
 
 
 from pathlib import Path
+import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,6 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'furni',
+    'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +61,17 @@ DATABASES = {
        'PORT': '7558',
    }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'database',
+#         'USER': 'postgres',
+#         'PASSWORD': 'hero-400' ,
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -88,3 +102,12 @@ STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'furni.CustomUser'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    )
+}
