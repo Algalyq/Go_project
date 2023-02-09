@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from furni.models import Products
-from furni.serializers import ProductsSerializer, ProductsDetailSerializer, ReviewCreateSerializer, CreateRatingSerializer
+from furni.serializers import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.response import Response
@@ -8,9 +8,20 @@ from rest_framework.views import APIView
 from furni.service import get_client_ip
 from django.db import models
 
+from rest_framework.parsers import MultiPartParser, FormParser
+
+from rest_framework import viewsets
 
 
 # Create your views here.
+
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Products.objects.all()
+    serializer_class = ProductsUploadSerializer
+    
+    parser_classes = (MultiPartParser, FormParser)
+
 
 class ProductsListView(APIView):
     

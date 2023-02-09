@@ -23,18 +23,16 @@ class Category(models.Model):
     CategoryName = models.CharField(max_length=128)
 
 class Products(models.Model):
-    sellerID = models.ForeignKey('Seller', on_delete=models.CASCADE)
-    categoryID = models.ForeignKey('Category', on_delete=models.CASCADE)
+    sellerID = models.ForeignKey('Seller', on_delete=models.CASCADE,null=True)
+    categoryID = models.ForeignKey('Category', on_delete=models.CASCADE,null=True)
     producttitle = models.CharField(max_length=128)
     price = models.PositiveIntegerField()
-    quantity = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField(null=True)
     pddesc = models.TextField()
-    imageNo1 = models.FileField(upload_to='uploads/',blank=True,null=False)
-    imageNo2 = models.FileField(upload_to='uploads/',blank=True,null=False)
-    imageNo3 = models.FileField(upload_to='uploads/',blank=True,null=False)
-    imageNo4 = models.FileField(upload_to='uploads/',blank=True,null=False)
-    imageNo5 = models.FileField(upload_to='uploads/',blank=True,null=False)
-    
+
+class ProductImages(models.Model):
+    product = models.ForeignKey(Products, on_delete=models.CASCADE,related_name="images")
+    image = models.FileField(upload_to='img',null=True,blank=True)     
    
 class Comments(models.Model):
   

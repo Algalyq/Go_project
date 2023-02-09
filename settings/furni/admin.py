@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import CustomUser,Category,Products,Seller, Comments, Rating,RatingStar
+from .models import *
 
 fields = list(UserAdmin.fieldsets)
 fields[1] = ('Personal Info', {'fields':('first_name', 'last_name','email','phone')})
