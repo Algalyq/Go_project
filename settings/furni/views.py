@@ -6,6 +6,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from furni.service import get_client_ip
+from rest_framework.permissions import IsAuthenticated
 from django.db import models
 
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -25,6 +26,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 class ProductsListView(APIView):
     
+    permission_classes = [IsAuthenticated]
     def get(self,request):
         productslist = Products.objects.all().annotate(
             rating_user=models.Count("ratings", filter=models.Q(ratings__ip=get_client_ip(request)))
