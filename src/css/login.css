@@ -32,21 +32,28 @@
     line-height: 1.6;
 }
 
+
+
 .form{
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
 }
 
 .form span{
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     margin-top: 20px;
 }
 
+
+
 .form span p{
     margin: 0;
-    font-size: 17px;
+    font-size: 14px;
     margin-bottom: 6px;
     color: #140C40;
     text-transform: capitalize;
@@ -104,4 +111,11 @@
 
 .login-link p>a:hover{
     cursor: pointer;
+}
+
+.form-login{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
 }

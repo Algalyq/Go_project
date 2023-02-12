@@ -29,8 +29,8 @@ function App() {
             <Route path='/info' element={<Info key={location.pathname}/>}/>
             <Route path="/services" element={<Service key={location.pathname}/>}/>      
             <Route path="/contact" element={<Contact key={location.pathname}/>}/>  
-          <Route path='/login' element={<Login key={location.pathname} />}/>    
-          <Route path='/register' element={<Registration key={location.pathname} />}/> 
+            <Route path='/login' element={<Login key={location.pathname} />}/>    
+            <Route path='/register' element={<Registration key={location.pathname} />}/> 
           <Route path='admin' element={<Admin/>}>
             <Route path='' element={<FurniturePanel/>} />
             <Route path='furniture' element={<FurniturePanel />}/>
