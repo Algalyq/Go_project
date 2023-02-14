@@ -14,10 +14,6 @@ class CategoryAdmin(admin.ModelAdmin):
    
 
 
-@admin.register(Seller)
-class Seller(admin.ModelAdmin):
-    list_display = ('id','Fullname','Email','CardNo')
-
 
 @admin.register(Products)
 class Products(admin.ModelAdmin):
@@ -31,7 +27,7 @@ class Comments(admin.ModelAdmin):
 class Rating(admin.ModelAdmin):
     list_display = ('ip','star','ProductID')
 
-@admin.register(RatingStar)
+@admin.register(RatingsStar)
 class RatingStar(admin.ModelAdmin):
     list_display = ('value',)
     
