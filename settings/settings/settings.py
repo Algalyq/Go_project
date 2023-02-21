@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_swagger',
     'rest_framework',
+    'payment',
 ]
 
 MIDDLEWARE = [

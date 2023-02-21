@@ -26,29 +26,33 @@ class Products(models.Model):
     quantity = models.PositiveIntegerField(null=True)
     pddesc = models.TextField()
 
+    def __str__(self):
+        return self.producttitle
+    
+
 class ProductImages(models.Model):
     product = models.ForeignKey(Products, on_delete=models.CASCADE,related_name="images")
     image = models.FileField(upload_to='img',null=True,blank=True)     
    
+
+
+STARS_CHOICES = [
+    (0, '0'),
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5')
+]
+
 class Comments(models.Model):
+    ip= models.CharField("IP address", max_length=15)
     ProductID=models.ForeignKey('Products',on_delete=models.CASCADE, related_name='review')
     UserID = models.ForeignKey('CustomUser',on_delete=models.CASCADE)
     BodyComment = models.TextField()
-    
-class RatingsStar(models.Model):
-    value=models.SmallIntegerField("Value:", default=0)
-    def __str__(self):
-        return f'{self.value}'
+    star = models.PositiveIntegerField(choices=STARS_CHOICES,default=0)
+  
 
-    class Meta:
-        verbose_name = "Star of rating"
-        verbose_name_plural = "Star of rating"
-        ordering = ["-value"]
 
-class Rating(models.Model):
-    ip= models.CharField("IP address", max_length=15)
-    star = models.ForeignKey('RatingsStar',on_delete=models.CASCADE, verbose_name="star")
-    ProductID = models.ForeignKey('Products',on_delete=models.CASCADE,verbose_name="furniture", related_name='ratings' )
-    
 
     

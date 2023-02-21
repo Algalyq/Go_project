@@ -23,13 +23,22 @@ class Products(admin.ModelAdmin):
 class Comments(admin.ModelAdmin):
     list_display = ('ProductID','UserID','BodyComment')
 
-@admin.register(Rating)
-class Rating(admin.ModelAdmin):
-    list_display = ('ip','star','ProductID')
 
-@admin.register(RatingsStar)
-class RatingStar(admin.ModelAdmin):
-    list_display = ('value',)
+
+@admin.register(ProductImages)
+class Images(admin.ModelAdmin):
+    list_display = ('product','image')
+
+
+
+    
+# @admin.register(Rating)
+# class Rating(admin.ModelAdmin):
+#     list_display = ('ip','star','ProductID')
+
+# @admin.register(RatingsStar)
+# class RatingStar(admin.ModelAdmin):
+#     list_display = ('value',)
     
 
 admin.site.register(CustomUser, UserAdmin)
