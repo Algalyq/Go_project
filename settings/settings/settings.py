@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'rest_framework',
     'payment',
+
+    # 'rest_framework_filters',
 ]
 
 MIDDLEWARE = [
@@ -127,7 +129,9 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.AllowAny',
     # ],
 
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',
+    )
+        # 'rest_framework_filters.backends.RestFrameworkFilterBackend',)
 }
 
 STATIC_URL = '/static/'

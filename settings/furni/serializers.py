@@ -61,6 +61,10 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
 
         return comment
 
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Comments
+        fields = ['ProductID','UserID','BodyComment','star']
 
 class ProductsSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True, read_only=True)
@@ -85,7 +89,7 @@ class ProductsSerializer(serializers.ModelSerializer):
 
 class ProductsDetailSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True, read_only=True)
-    review = ReviewCreateSerializer(many=True)
+    review = ReviewSerializer(many=True)
     average_rating= serializers.SerializerMethodField()
     uploaded_images = serializers.ListField(
         child = serializers.ImageField(max_length = 1000000, allow_empty_file = False, use_url = False),

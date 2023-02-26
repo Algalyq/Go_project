@@ -47,8 +47,10 @@ class ProductFilter(generics.ListAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductsDetailSerializer
     filter_backends = [DjangoFilterBackend,OrderingFilter]
-    filterset_class = ProductFilters
-
+    # filterset_class = ProductFilters
+    filterset_fields = {
+       'price': [ 'lte', 'gte']
+    } 
 
     # ordering = ('price')
 
