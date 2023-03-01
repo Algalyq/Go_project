@@ -6,4 +6,5 @@ type Products struct {
   Price int `json:"price"`
   Quantity int `json:"quantity"`
   Pddesc string `json:"pddesc"`
+  Image string `json:"image"`
 }

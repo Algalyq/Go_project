@@ -1,8 +1,7 @@
 package service
 
 import (
-	"crypto/sha1"
-	"fmt"
+	// "golang.org/x/crypto/bcrypt"
 	"github.com/Algalyq/Go_project"
 	"github.com/Algalyq/Go_project/pkg/repository"
 	"github.com/dgrijalva/jwt-go"
@@ -10,9 +9,9 @@ import (
 	"errors"
 )
 
-const (salt = "s45ew4fd5f1verv5erg"
+const (salt = "@l(*i3aqztc#397#p%^8babo$$o1$9ct%^o*4y5d=&6rg58bvb"
 	   tokenTTL = time.Hour * 12
-	   signingKey = "s45ew4fd5f1verv5erg"
+	   signingKey = "@l(*i3aqztc#397#p%^8babo$$o1$9ct%^o*4y5d=&6rg58bvb"
 	)
 
 
@@ -30,15 +29,13 @@ func newAuthService(repo repository.Authorization) *AuthService {
 }
 
 func (a *AuthService) CreateUser(user goproject.User) (int, error) {
-	user.Password = generatePasswordHash(user.Password)	 
-	user.Confirmpassword = generatePasswordHash(user.Confirmpassword)
 	return a.repo.CreateUser(user)	
 	
 	
 }
 
 func (a *AuthService) GenerateToken(username,password string) (string, error) {
-	user, err := a.repo.GetUser(username,generatePasswordHash(password))
+	user, err := a.repo.GetUser(username,password)
 	if err!= nil {
         return "", err
     }
@@ -47,7 +44,7 @@ func (a *AuthService) GenerateToken(username,password string) (string, error) {
 			ExpiresAt: time.Now().Add(tokenTTL).Unix(),
 			IssuedAt: time.Now().Unix(),
 		},
-		user.Id,		
+		user.Id,
 	})
 	return token.SignedString([]byte(signingKey))
 }
@@ -56,8 +53,8 @@ func(s*AuthService) ParseToken(accessToken string) (int, error) {
 	token,err:= jwt.ParseWithClaims(accessToken,&tokenClaims{}, func(token *jwt.Token) (interface{}, error) {
 	  if _, ok := token.Method.(*jwt.SigningMethodHMAC);!ok {	
 		return nil, errors.New("invalid signing method")
-}	
-return []byte(signingKey),nil
+	}	
+	return []byte(signingKey),nil
 	})
 	if err!= nil {
 			return 0, err
@@ -72,8 +69,4 @@ return []byte(signingKey),nil
 	
 
 
-func generatePasswordHash(password string) string {
-	hash := sha1.New()
-	hash.Write([]byte(password))
-	return fmt.Sprintf("%x",hash.Sum([]byte(salt)))
-}
+

@@ -30,10 +30,10 @@ func (a *SearchPostgres) GetSearchingProduct(c *gin.Context) ([]goproject.Produc
 	if err != nil {
 		panic("Could not connect to the database")
 	}
-		sql := "SELECT id,producttitle,price,quantity,pddesc FROM furni_products"
+	sql := "SELECT fp.id,fp.producttitle,fp.price,fp.quantity,fp.pddesc, pr.image FROM furni_products AS fp join furni_productimages AS pr on fp.id = pr.product_id"
 		
 		if s := c.Query("s"); s != "" {
-			sql = fmt.Sprintf("%s WHERE producttitle LIKE '%%%s%%' OR pddesc LIKE '%%%s%%'", sql, s, s)
+			sql = fmt.Sprintf("%s WHERE fp.producttitle LIKE '%%%s%%'", sql, s)
 		}
 		db.Raw(sql).Scan(&products)
 
