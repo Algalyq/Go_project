@@ -4,15 +4,17 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.exceptions import FieldDoesNotExist
 from django.core.validators import RegexValidator
-
+import jwt
+import settings
+import datetime
 phone_regex = RegexValidator( regex   =r'^\+?1?\d{9,14}$', message ="Phone number must be entered in the format: '+999999999'. Up to 14 digits allowed.")
   
-card_regex = RegexValidator( regex   =r'^\?1?\d{9,12}$', message ="Card number must be entered in the format: '**** **** **** ****'. Up to 12 digits allowed.")
-  
+card_regex = RegexValidator( regex   =r'^\+?1?\d{9,14}$', message ="Card number must be entered in the format: '**** **** **** ****'. Up to 12 digits allowed.")
+SECRET_KEY =  'django-insecure-@l(*i3aqztc#397#p%^8babo$$o1$9ct%^o*4y5d=&6rg58bvb'
 class CustomUser(AbstractUser):
     phone  = models.CharField(validators=[phone_regex], max_length=17, unique=True,null=True)
-    CardNo = models.CharField(max_length=12,validators=[card_regex],null=True)
-
+    CardNo = models.CharField(max_length=19
+    ,validators=[card_regex],null=True)
 
 
 class Category(models.Model):

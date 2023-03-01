@@ -8,6 +8,8 @@ from rest_framework.views import APIView
 from furni.service import get_client_ip
 from rest_framework.permissions import IsAuthenticated
 from django.db import models
+
+from rest_framework.permissions import AllowAny
 from .filters import *
 from rest_framework.parsers import MultiPartParser, FormParser
 
@@ -56,11 +58,7 @@ class ProductFilter(generics.ListAPIView):
 
 
 class CommentView(viewsets.ModelViewSet):
+
+    # permission_classes = [IsAuthenticated]
     queryset = Comments.objects.all()
     serializer_class = ReviewCreateSerializer
-
-
-
-
-   
-   

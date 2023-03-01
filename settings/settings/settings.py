@@ -5,7 +5,6 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@l(*i3aqztc#397#p%^8babo$$o1$9ct%^o*4y5d=&6rg58bvb'
 DEBUG = True
@@ -24,14 +23,18 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'rest_framework',
     'payment',
+    'corsheaders',
+    'rest_framework.authtoken'
 
     # 'rest_framework_filters',
 ]
 
 MIDDLEWARE = [
+
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -162,8 +165,6 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
-
-    'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),

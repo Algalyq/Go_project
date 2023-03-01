@@ -41,4 +41,7 @@ class Images(admin.ModelAdmin):
 #     list_display = ('value',)
     
 
-admin.site.register(CustomUser, UserAdmin)
+@admin.register(CustomUser)
+class Users(admin.ModelAdmin):
+    list_display = ('username','password')
+
