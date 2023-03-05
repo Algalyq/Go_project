@@ -82,6 +82,7 @@ func (h *Handler) signin(c *gin.Context){
 	}
 
 	c.JSON(http.StatusOK,map[string]interface{}{
-		"token":token.Access,
+		"refresh_token":token.Refresh,
+		"access_token":token.Access,
 	})
 }
