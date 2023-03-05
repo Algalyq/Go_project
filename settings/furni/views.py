@@ -8,6 +8,8 @@ from rest_framework.views import APIView
 from furni.service import get_client_ip
 from rest_framework.permissions import IsAuthenticated
 from django.db import models
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
 
 from rest_framework.permissions import AllowAny
 from .filters import *
@@ -66,11 +68,22 @@ class CommentView(viewsets.ModelViewSet):
 
 
 class CommentDetailView(viewsets.ModelViewSet):
-
     serializer_class = ReviewSerializer
-    # permission_classes = [IsAuthenticated]
     queryset = Comments.objects.all()
 
     def get_queryset(self):
         return super().get_queryset().filter(ProductID=self.kwargs.get('ProductID'))
     
+
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
