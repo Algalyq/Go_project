@@ -62,3 +62,15 @@ class CommentView(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
     queryset = Comments.objects.all()
     serializer_class = ReviewCreateSerializer
+
+
+
+class CommentDetailView(viewsets.ModelViewSet):
+
+    serializer_class = ReviewSerializer
+    # permission_classes = [IsAuthenticated]
+    queryset = Comments.objects.all()
+
+    def get_queryset(self):
+        return super().get_queryset().filter(ProductID=self.kwargs.get('ProductID'))
+    

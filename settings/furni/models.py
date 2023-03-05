@@ -49,7 +49,7 @@ STARS_CHOICES = [
 
 class Comments(models.Model):
     ip= models.CharField("IP address", max_length=15)
-    ProductID=models.ForeignKey('Products',on_delete=models.CASCADE, related_name='review')
+    ProductID=models.ForeignKey('Products',on_delete=models.CASCADE, related_name='review',db_index=True)
     UserID = models.ForeignKey('CustomUser',on_delete=models.CASCADE)
     BodyComment = models.TextField()
     star = models.PositiveIntegerField(choices=STARS_CHOICES,default=0)
