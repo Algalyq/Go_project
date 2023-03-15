@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function ImageUploader() {
+function ImageUploader(props) {
   const [images, setImages] = useState([]);
 
   const handleImageChange = (event) => {
     setImages([...images, ...event.target.files]);
   };
+
+  useEffect(() => {
+        props.onChangeFile(images)
+  }, [images])
+  
 
   return (
     <div>

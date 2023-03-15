@@ -20,7 +20,7 @@ export default function usersReducers(state=initialState, action) {
         case types.LOGIN_USER: 
             return {...state};
         case types.SUCCESSFUL_LOGIN_USER:
-            localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('token', action.payload.access_token);
             return {...state, token: action.payload};
         case types.FAILURE_LOGIN_USER:
             alert("Ведутся технические работы, по пробуйте позже!");

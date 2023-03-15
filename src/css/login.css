@@ -119,3 +119,26 @@
     align-items: flex-end;
     gap: 0;
 }
+
+.navbar-nav button{
+    background-color: #2f2f2f;
+    border-radius: 5px;
+    border: transparent;
+    color: #f9bf29;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    position: absolute;
+    z-index: -9;
+    top: 20px;
+    transition: .4s;
+}
+
+.navbar-nav li:first-child{
+    position: relative;
+}
+
+.navbar-nav li:first-child:hover button{
+    z-index: 9;
+    top: 40px;
+    transition: .4s;
+}

@@ -13,14 +13,38 @@ import configureStore from './store';
 import FurniturePanel from "./admin/furniturePanel";
 import Admin from "./admin";
 import Review from "./pages/review";
-import Aside from "./components/aside";
+import { useState, useEffect } from "react";
+import { BASE_URL2 } from "./config/baseurl2";
+import axios from "axios";
+import DataContext from "./components/datacontext";
 
 const store = configureStore();
 
 function App() {
   let location = useLocation();
+  const [product, setProduct] = useState({data: []})
+
+  useEffect(()=>{
+    function showProducts(){
+      console.log(localStorage.getItem('token'));
+      axios.get(
+        `${BASE_URL2}/products/filter/`,
+        {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+      ).then(response => {
+        const data = response.data;
+        setProduct(data);
+        console.log(data); // log the data to check if it's being fetched correctly
+      }).catch(error => {
+        console.error(error)
+      });
+    }
+    
+    showProducts();
+  }, [])
   return (
+    <DataContext.Provider value={product}>
     <Provider store={store}>
+      
     <div className="App">
          {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/admin'  && location.pathname !== '/admin/furniture'  && <Header/>}
          <Routes>
@@ -35,12 +59,13 @@ function App() {
             <Route path='' element={<FurniturePanel/>} />
             <Route path='furniture' element={<FurniturePanel />}/>
           </Route>
-          <Route path="/review" element={<Review />}/>
+          <Route path="/review/:id" element={<Review key={location.pathname} queryname="product_id"/>}/>
         </Routes>
         {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/admin'  && location.pathname !== '/admin/furniture' &&  <Footer/>}
          
     </div>
     </Provider>
+    </DataContext.Provider>
   );
 }
 

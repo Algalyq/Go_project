@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import { useEffect, useState } from 'react';
 import { searchProducts } from '../store/actions/searchAction';
-import chair from '../images/chair.webp';
 
 function Aside({opened, setOpened, searchAction, list}){
     const [name, setName] = useState("aside");
@@ -30,6 +29,7 @@ function Aside({opened, setOpened, searchAction, list}){
 
     function setClosed(){
         setOpened(false)
+        setData({data: []})
     }
 
     function onChangeText(e){
@@ -44,13 +44,15 @@ function Aside({opened, setOpened, searchAction, list}){
              </span>
              <div className='aside-res'>
                   {
-                    datas && datas.length>0  && datas.map((item, index)=>(
-                      <span>
-                           <img src={chair} alt="Chair" />
+                    datas && datas.length>0  && datas.map((item, index)=>{
+                      return(
+                      <span key={index}>
+                           <img src={require(`../../../Go_project/settings/media/${item.image}`)} alt="Chair" />
                            <h1>{item.producttitle}</h1>
                            <p>{item.price}.00$</p>
                       </span>
-                    ))
+                      )
+                    })
                   }
              </div>
         </aside>
