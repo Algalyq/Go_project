@@ -27,17 +27,21 @@ function FurniturePanel({createProductAction, isLoading}){
         console.log(data)
         setFile(data)
     }
+    const formData = new FormData();
 
+   
+      
     function createProduct(){
-           createProductAction({
-                producttitle: name,
-                price,
-                sellerID: 1,
-                quantity: 10,
-                pddesc: description,
-                categoryID: 1,
-                uploaded_images: file
-           });
+           formData.append('producttitle', name);
+           formData.append('price', price);
+           formData.append('sellerID', 1);
+           formData.append('quantity', 10);
+           formData.append('pddesc', description);
+           formData.append('categoryID', 1);
+           file.forEach((item, index) => {
+            formData.append(`uploaded_images`, item);
+            });
+           createProductAction(formData);
     }
     return(
         <section className="panel">
