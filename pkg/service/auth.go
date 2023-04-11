@@ -6,12 +6,15 @@ import (
 	"github.com/Algalyq/Go_project/pkg/repository"
 	"github.com/dgrijalva/jwt-go"
 	"time"
+	"fmt"
 	"errors"
+	"crypto/sha1"
+	"github.com/google/uuid"
 )
 
-const (salt = "@l(*i3aqztc#397#p%^8babo$$o1$9ct%^o*4y5d=&6rg58bvb"
-	   tokenTTL = time.Hour * 12
-	   signingKey = "@l(*i3aqztc#397#p%^8babo$$o1$9ct%^o*4y5d=&6rg58bvb"
+const (salt = "at%^o*4y5d=&6rg58bvb"
+	   tokenTTL = time.Hour * 1
+	   signingKey = "django-insecure-@l(*i3aqztc#397#p%^8babo$$o1$9ct%^o*4y5d=&6rg58bvb"
 	)
 
 
@@ -29,24 +32,36 @@ func newAuthService(repo repository.Authorization) *AuthService {
 }
 
 func (a *AuthService) CreateUser(user goproject.User) (int, error) {
-	return a.repo.CreateUser(user)	
-	
-	
+	user.Password = generatePasswordHash(user.Password)	 
+    return a.repo.CreateUser(user)
 }
 
 func (a *AuthService) GenerateToken(username,password string) (string, error) {
-	user, err := a.repo.GetUser(username,password)
+	user, err := a.repo.GetUser(username,generatePasswordHash(password))
 	if err!= nil {
         return "", err
     }
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &tokenClaims{
-		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(tokenTTL).Unix(),
-			IssuedAt: time.Now().Unix(),
-		},
-		user.Id,
-	})
-	return token.SignedString([]byte(signingKey))
+    token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"token_type":"access",
+        "user_id": user.Id,
+        "iat": time.Now().Unix(),
+        "exp": time.Now().Add(tokenTTL).Unix(),
+        "jti": uuid.New().String(),
+    })
+	
+	tokenString, err := token.SignedString([]byte(signingKey))
+    if err != nil {
+        return "", err
+    }
+
+    return tokenString, nil
+}
+
+
+func generatePasswordHash(password string) string {
+	hash := sha1.New()
+	hash.Write([]byte(password))
+	return fmt.Sprintf("%x",hash.Sum([]byte(salt)))
 }
 
 func(s*AuthService) ParseToken(accessToken string) (int, error) {
