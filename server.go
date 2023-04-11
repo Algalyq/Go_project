@@ -1,8 +1,10 @@
 package goproject
 
-import ("net/http"
-		"time"
-		"context")
+import (
+	"context"
+	"net/http"
+	"time"
+)
 
 
 
@@ -17,8 +19,9 @@ func (s *Server) Run(port string, handler http.Handler) error {
 		ReadTimeout: 10 * time.Second,
 		WriteTimeout: 10 * time.Second,
         MaxHeaderBytes: 1 << 20,
-	}
+	}	
 
+   
 	return s.httpServer.ListenAndServe()
 }
 
