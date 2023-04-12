@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 
+	
 	"github.com/Algalyq/Go_project"
 	"github.com/gin-gonic/gin"
 )
@@ -42,11 +43,19 @@ type signInInput struct {
 				return
 		}
 		token, err := h.services.Authorization.GenerateToken(input.Username,input.Password)
+		refresh,err := h.services.Authorization.RefreshToken(input.Username,input.Password)
 		if err!= nil {
 			newErrorResponse(c,http.StatusBadRequest, err.Error())
 			return
 		}
 		c.JSON(http.StatusOK,map[string]interface{}{
-			"token":token,
+			"access_token":token,
+			"refresh_token":refresh,
 		})
 	}
+ 
+
+
+
+
+	

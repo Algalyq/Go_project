@@ -58,6 +58,29 @@ func (a *AuthService) GenerateToken(username,password string) (string, error) {
 }
 
 
+func (a *AuthService) RefreshToken(username,password string) (string, error) {
+	user, err := a.repo.GetUser(username,generatePasswordHash(password))
+
+	if err!= nil {
+        return "", err
+    }
+	
+    token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"token_type":"refresh",
+        "user_id": user.Id,
+        "iat": time.Now().Unix(),
+        "exp": time.Now().Add(7 * 24* time.Hour).Unix(),
+        "jti": uuid.New().String(),
+    })
+	
+	tokenString, err := token.SignedString([]byte(signingKey))
+    if err != nil {
+        return "", err
+    }
+
+    return tokenString, nil
+}
+
 func generatePasswordHash(password string) string {
 	hash := sha1.New()
 	hash.Write([]byte(password))

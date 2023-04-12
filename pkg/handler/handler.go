@@ -18,7 +18,6 @@ func NewHandler(services *service.Service) *Handler {
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.Default()
-	
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{"http://localhost:3000"}
 	router.Use(cors.New(config))
@@ -27,6 +26,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	 {
 		auth.POST("/signup",h.signup)
 		auth.POST("/signin",h.signin)
+		// auth.GET("/logout",)
 	 }
 
 	 search := router.Group("/products")

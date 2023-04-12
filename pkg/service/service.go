@@ -10,6 +10,7 @@ type Authorization interface {
 	CreateUser(user goproject.User) (int, error)
 	GenerateToken(username, password string) (string, error)
 	ParseToken(token string) (int, error)
+	RefreshToken(username,password string) (string,error)
 }
 
 type Searhing interface {
