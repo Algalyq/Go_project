@@ -21,7 +21,7 @@ urlpatterns = [
     path('',publishing_product_list,name="all_products"),
     path('<int:pk>/',publishing_product_dt,name="productsdetail"),
     path('comments/',comment_list,name="commentlist"),
-    path('<int:ProductID>/comments/',comment_detail,name="commentdetail"),
+    path('<int:pk>/comments/',comment_detail,name="commentdetail"),
     path('filter/',ProductFilter.as_view()),
     path('seller/registration', RegisterView.as_view(), name='auth_register'),
     path('seller/login', TokenObtainPairView.as_view(), name='token_obtain_pair'),

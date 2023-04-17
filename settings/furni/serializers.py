@@ -7,9 +7,16 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from django.db.models import Avg,F,Sum,Count
 import math
-
+import json
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class UsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ['id','first_name','last_name']
+
+        model = CustomUser
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -40,7 +47,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            is_superuser=True,
+            is_superuser=False,
         )
         user.set_password(validated_data['password'])
         user.save()
@@ -48,9 +55,17 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 class ProductImageSerializer(serializers.ModelSerializer):
+
+
+    # image_url = serializers.SerializerMethodField('get_image_url')
     class Meta:
         model = ProductImages
         fields = ["id","product","image"]
+
+    
+    # def get_image_url(self, obj):
+    #     return obj.image.url
+    
 
         
 class ReviewCreateSerializer(serializers.ModelSerializer):
@@ -66,14 +81,20 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
         return comment
 
 class ReviewSerializer(serializers.ModelSerializer):
+    
+    full_name = serializers.SerializerMethodField('get_name')
     class Meta:
         model=Comments
-        fields = ['ProductID','UserID','BodyComment','star']
+        fields = ['ProductID','BodyComment','star','full_name']
+
+    def get_name(self,obj):
+        return f"{obj.UserID.first_name} {obj.UserID.last_name}"
+    
 
 class ProductsSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True, read_only=True)
     uploaded_images = serializers.ListField(
-        child = serializers.ImageField(max_length = 1000000, allow_empty_file = False, use_url = False),
+        child = serializers.FileField(max_length = 1000000, allow_empty_file = False, use_url = True),
         write_only=True)
 
 
@@ -83,9 +104,13 @@ class ProductsSerializer(serializers.ModelSerializer):
         extra_kwargs = {"user":{"read_only":True}}
         
     def create(self,validated_data):
+        print(validated_data)
         uploaded_images = validated_data.pop("uploaded_images")
+        # uploaded = self.context['request'].FILES['uploaded_images']
+        
         validated_data['sellerID'] = self.context['request'].user
         product = Products.objects.create(**validated_data)
+        
         for image in uploaded_images:
             newproduct_image = ProductImages.objects.create(product=product, image=image)
         return product
@@ -96,16 +121,15 @@ class ProductsDetailSerializer(serializers.ModelSerializer):
     review = ReviewSerializer(many=True)
     average_rating= serializers.SerializerMethodField()
     uploaded_images = serializers.ListField(
-        child = serializers.ImageField(max_length = 1000000, allow_empty_file = False, use_url = False),
-        write_only=True)
-
+        child = serializers.ImageField(max_length = 10, allow_empty_file = False,use_url=False),write_only=True)
 
     class Meta:
         model = Products
-        fields = ["producttitle","price","sellerID","quantity","pddesc","categoryID","review","average_rating", "images","uploaded_images"]
+        fields = ["id","producttitle","price","sellerID","quantity","pddesc","categoryID","review","average_rating", "images","uploaded_images"]
         extra_kwargs = {"user":{"read_only":True}}
         
     def create(self,validated_data):
+        
         uploaded_images = validated_data.pop("uploaded_images")
         validated_data['sellerID'] = self.context['request'].user
         product = Products.objects.create(**validated_data)
@@ -119,6 +143,6 @@ class ProductsDetailSerializer(serializers.ModelSerializer):
             return -1 
         return av
 
-    
+
 
 

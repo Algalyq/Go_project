@@ -7,6 +7,6 @@ class ProductFilters(FilterSet):
         model = Products
         fields = {
             # 'producttitle'
-            'price': ['gt','lt'],
+            'price': ['gte','lte'],
             # 'ratings': ['exact','rating']
         }

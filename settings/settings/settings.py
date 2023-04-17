@@ -25,9 +25,9 @@ INSTALLED_APPS = [
     'payment',
     'corsheaders',
     'rest_framework.authtoken',
-
     "rest_framework_simplejwt.token_blacklist",
     # 'rest_framework_filters',
+    "django_createsuperuser"
 ]
 
 MIDDLEWARE = [
@@ -41,6 +41,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+CORS_ORIGIN_ALLOW_ALL = False
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+
+
+ALLOWED_HOSTS=['*']
+
 
 ROOT_URLCONF = 'settings.urls'
 
@@ -69,12 +78,19 @@ DATABASES = {
       'default': {
        'ENGINE': 'django.db.backends.postgresql',
        'NAME': 'test_db',
-       'USER': 'docker',
-       'PASSWORD': 'docker',
-       'HOST': 'localhost',
-       'PORT': '7558',
-   }
+       'USER':'docker',
+       'PASSWORD':'docker',
+       'HOST':'postgres-db',
+       'PORT':5432,
+    }
 }
+#        'NAME': 'test_db',
+#        'USER': 'docker',
+#        'PASSWORD': 'docker',
+#        'HOST': 'db',
+#        'PORT': '7558',
+#    }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -128,22 +144,24 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated', 
-    #     'rest_framework.permissions.AllowAny',
-    # ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', 
+        'rest_framework.permissions.AllowAny',
+    ],
 
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',
     )
         # 'rest_framework_filters.backends.RestFrameworkFilterBackend',)
 }
 
-STATIC_URL = '/static/'
 
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8000',
+)
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -169,3 +187,11 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=15),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
+SESSION_COOKIE_AGE = 720

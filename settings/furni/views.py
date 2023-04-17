@@ -10,61 +10,46 @@ from rest_framework.permissions import IsAuthenticated
 from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
-
 from rest_framework.permissions import AllowAny
 from .filters import *
-from rest_framework.parsers import MultiPartParser, FormParser
-
+from rest_framework.parsers import MultiPartParser, FormParser,JSONParser
 from rest_framework.decorators import action
 from rest_framework import viewsets
-
 from rest_framework import generics
-
-# Create your views here.
 
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Products.objects.all()
-
+    parser_classes = (MultiPartParser, FormParser)
     # permission_classes = [IsAuthenticated]
     serializer_class = ProductsSerializer
-    parser_classes = (MultiPartParser, FormParser)
-
-
-
 
 class ProductDetailViewSet(viewsets.ModelViewSet):
     queryset = Products.objects.all()
-
+    parser_classes = (MultiPartParser, FormParser,JSONParser)
     # permission_classes = [IsAuthenticated]
     serializer_class = ProductsDetailSerializer
-    parser_classes = (MultiPartParser, FormParser)
 
 class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = RegisterSerializer
-
-
     
-
 class ProductFilter(generics.ListAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductsDetailSerializer
     filter_backends = [DjangoFilterBackend,OrderingFilter]
-    # filterset_class = ProductFilters
-    filterset_fields = {
-       'price': [ 'lte', 'gte']
-    } 
+    filterset_class = ProductFilters
+    # filterset_fields = {
+    #    'price': [ 'lte', 'gte']
+    # } 
 
     # ordering = ('price')
 
 
 class CommentView(viewsets.ModelViewSet):
-
     # permission_classes = [IsAuthenticated]
     queryset = Comments.objects.all()
     serializer_class = ReviewCreateSerializer
-
 
 
 class CommentDetailView(viewsets.ModelViewSet):
@@ -72,7 +57,7 @@ class CommentDetailView(viewsets.ModelViewSet):
     queryset = Comments.objects.all()
 
     def get_queryset(self):
-        return super().get_queryset().filter(ProductID=self.kwargs.get('ProductID'))
+        return super().get_queryset().filter(ProductID=self.kwargs.get('pk'))
     
 
 class LogoutView(APIView):
@@ -83,7 +68,6 @@ class LogoutView(APIView):
             refresh_token = request.data["refresh_token"]
             token = RefreshToken(refresh_token)
             token.blacklist()
-
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
