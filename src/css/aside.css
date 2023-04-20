@@ -4,7 +4,7 @@
     right: -600px;
     background-color: #fff;
     width: 30%;
-    height: 100vh;
+    height: 100%;
     z-index: 99;
     padding: 50px;
     box-sizing: border-box;
@@ -58,10 +58,10 @@
 }
 
 .aside-res>span{
-    width: 35% !important;
+    width: 33% !important;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 50%;
     border-bottom: none;
     padding: 20px;
     box-sizing: border-box;

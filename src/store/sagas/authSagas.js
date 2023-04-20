@@ -18,9 +18,11 @@ function* login({data, navigate}){
         console.log(data)
         const admin_token = yield axios.post(`${BASE_URL}/auth/signin`, JSON.stringify(data)).then(res => res.data);
         console.log(admin_token)
+        const expiryDate = new Date(new Date().getTime() + 3600 * 1000);
         if (admin_token){
             axios.defaults.headers.common['Authorization'] = `Bearer ${admin_token.access_token}`;
             localStorage.setItem('token',admin_token.access_token)
+            localStorage.setItem("expiryDate", expiryDate.toISOString());
             navigate("../")
         }
         yield put({type:types.SUCCESSFUL_LOGIN_USER, payload : admin_token})

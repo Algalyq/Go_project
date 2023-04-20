@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 import { BASE_URL2 } from "./config/baseurl2";
 import axios from "axios";
 import DataContext from "./components/datacontext";
+import Cart from "./pages/cart";
 
 const store = configureStore();
 
@@ -41,6 +42,17 @@ function App() {
     
     showProducts();
   }, [])
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const expiryDate = localStorage.getItem('expiryDate');
+
+    if (token && new Date(expiryDate) <= new Date()) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('expiryDate');
+    }
+  }, []);
+
   return (
     <DataContext.Provider value={product}>
     <Provider store={store}>
@@ -55,6 +67,7 @@ function App() {
             <Route path="/contact" element={<Contact key={location.pathname}/>}/>  
             <Route path='/login' element={<Login key={location.pathname} />}/>    
             <Route path='/register' element={<Registration key={location.pathname} />}/> 
+            <Route path='/cart' element={<Cart key={location.pathname} />} />
           <Route path='admin' element={<Admin/>}>
             <Route path='' element={<FurniturePanel/>} />
             <Route path='furniture' element={<FurniturePanel />}/>

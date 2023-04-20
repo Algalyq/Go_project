@@ -17,7 +17,7 @@ function Aside({opened, setOpened, searchAction, list}){
     }, [opened])
 
     function searchAct(){
-         searchAction({s:searchText})
+         searchAction({data:searchText})
          setData(list.data)
          console.log(list)
     }
@@ -27,20 +27,23 @@ function Aside({opened, setOpened, searchAction, list}){
          console.log(datas)
     }, [list])
 
-    function setClosed(){
-        setOpened(false)
-        setData({data: []})
-    }
-
     function onChangeText(e){
       setSearchText(e.target.value);
     }
+
+    function setClosed(){
+        setOpened(false)
+        setData({data: []})
+        setSearchText("")
+    }
+
+    
     return(
         <aside className={name}>
             <button className='close' onClick={setClosed}>X</button>
              <span>
                    <img src={search} alt="Search" onClick={searchAct}/>
-                  <input type="text" name="search" placeholder="Search..." onChange={onChangeText}/>
+                  <input type="text" name="search" placeholder="Search..." value={searchText} onChange={onChangeText}/>
              </span>
              <div className='aside-res'>
                   {

@@ -5,6 +5,7 @@ import {BASE_URL} from '../../config/baseurl';
 
 function* searchProducts({data}){
     try{
+        console.log(data)
         const products = yield axios.get(`${BASE_URL}/products/search/`, data).then(res => res.data);
         console.log(products)
         yield put({type:types.SUCCESS_SEARCH_PRODUCTS , payload : products})

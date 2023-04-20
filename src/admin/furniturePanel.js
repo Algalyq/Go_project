@@ -40,8 +40,8 @@ function FurniturePanel({createProductAction, isLoading}){
            formData.append('categoryID', 1);
            file.forEach((item, index) => {
             formData.append(`uploaded_images`, item);
-            });
-           createProductAction(formData);
+          });
+          createProductAction(formData);
     }
     return(
         <section className="panel">
