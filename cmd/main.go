@@ -1,10 +1,9 @@
 package main
 
 import (
-
 	"log"
 	"github.com/spf13/viper"
-	"github.com/Algalyq/Go_project"
+	"github.com/Algalyq/Go_project/data"
 	"github.com/Algalyq/Go_project/pkg/handler"
 	"github.com/Algalyq/Go_project/pkg/repository"
 	"github.com/Algalyq/Go_project/pkg/service"
@@ -34,7 +33,7 @@ func main() {
 	services := service.NewService(repo)
 	handler := handler.NewHandler(services)
 
-	srv := new(goproject.Server)
+	srv := new(data.Server)
 	if err := srv.Run(viper.GetString("port"), handler.InitRoutes()); err != nil{
 		log.Fatalf(err.Error())
 	}

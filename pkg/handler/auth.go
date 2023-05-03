@@ -4,12 +4,12 @@ import (
 	"net/http"
 
 	
-	"github.com/Algalyq/Go_project"
+	"github.com/Algalyq/Go_project/data"
 	"github.com/gin-gonic/gin"
 )
 
 func (h *Handler) signup(c *gin.Context){
-	var input goproject.User
+	var input data.User
 
 	if err := c.BindJSON(&input); err!= nil {
 			newErrorResponse(c,http.StatusBadRequest, err.Error())

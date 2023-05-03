@@ -2,7 +2,7 @@ package service
 
 import (
 	// "golang.org/x/crypto/bcrypt"
-	"github.com/Algalyq/Go_project"
+	"github.com/Algalyq/Go_project/data"
 	"github.com/Algalyq/Go_project/pkg/repository"
 	"github.com/dgrijalva/jwt-go"
 	"time"
@@ -31,7 +31,7 @@ func newAuthService(repo repository.Authorization) *AuthService {
 	return &AuthService{repo:repo}
 }
 
-func (a *AuthService) CreateUser(user goproject.User) (int, error) {
+func (a *AuthService) CreateUser(user data.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)	 
     return a.repo.CreateUser(user)
 }

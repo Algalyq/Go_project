@@ -1,4 +1,4 @@
-package goproject
+package data
 
 type Products struct {
   Id int `json:"id"`

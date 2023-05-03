@@ -28,7 +28,7 @@ services:
       - backend
   web:
     build: /home/nurzhan/Desktop/Go/Django_Backend/settings
-    command: bash -c "ls &&python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/home/nurzhan/Desktop/Go/Django_Backend/settings/
     ports:
