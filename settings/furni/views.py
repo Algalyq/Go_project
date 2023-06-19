@@ -39,15 +39,10 @@ class ProductFilter(generics.ListAPIView):
     serializer_class = ProductsDetailSerializer
     filter_backends = [DjangoFilterBackend,OrderingFilter]
     filterset_class = ProductFilters
-    # filterset_fields = {
-    #    'price': [ 'lte', 'gte']
-    # } 
 
-    # ordering = ('price')
 
 
 class CommentView(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
     queryset = Comments.objects.all()
     serializer_class = ReviewCreateSerializer
 

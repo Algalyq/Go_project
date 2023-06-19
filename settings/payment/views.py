@@ -99,7 +99,8 @@ class AddToCartView(APIView):
             return Response({'error': 'Invalid data'})
         
         cart = request.session.get('cart', {})
-        cart_item = cart.get(item_id, {})
+        cart_item = cart.get('',{})
+        cart_item['key'] = item_id
         cart_item['name'] = product.producttitle
         cart_item['price'] = product.price
         cart_item['quantity'] = product.quantity
@@ -113,7 +114,10 @@ class CartView(APIView):
 
     def get(self, request):
         cart = request.session.get('cart', {})
-        return Response(cart)
+        new_list = []
+        for key in cart:
+            new_list.append(cart[key])
+        return Response(new_list)
         
 class UpdateCartItemView(APIView):
     def put(self, request,):
