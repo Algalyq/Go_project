@@ -30,7 +30,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	 search := router.Group("/products")
 	 {
-		search.GET("/search/",h.Search)
+		search.GET("/search",h.Search)
 	 }
 
 

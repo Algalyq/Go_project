@@ -4,30 +4,33 @@ version: "3.9"
 services:
   react:
     build: /home/nurzhan/Desktop/Go/Go_project/
+    container_name: react
     ports:
       - "3000:3000"
     volumes:
       - /home/nurzhan/Desktop/Go/Go_project
     depends_on:
-      - app
+      - go
 
 
   postgres-db:
     build: ./postgres-db
+    container_name: db
     ports:
       - 5436:5432
     volumes:
-      -  ./postgres-db/pgdata/pgdata
+      -  /home/nurzhan/Desktop/Go/Go_Backend/Go_project/postgres-db/pgdata/pgdata/
     environment:
       - POSTGRES_DB=test_db
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=docker
       - PGDATA=/pgdata
-
     networks:
       - backend
-  web:
+
+  django:
     build: /home/nurzhan/Desktop/Go/Django_Backend/settings
+    container_name: django
     command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/home/nurzhan/Desktop/Go/Django_Backend/settings/
@@ -37,19 +40,15 @@ services:
       - postgres-db
     networks:
       - backend
-  app:
+      
+  go:
     build: ./
+    container_name: go
     command: bash -c "go run ./cmd/main.go -b 0.0.0.0:8080"
     ports:
       - "8080:8080"
     volumes:
       - .:/home/nurzhan/Desktop/Go/Go_Backend/Go_project/cmd/
-    environment:
-      - POSTGRES_HOST=postgres-db
-      - POSTGRES_PORT=5432
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=test_db
     depends_on:
       - postgres-db
     networks:
@@ -57,13 +56,3 @@ services:
 networks:
   backend:
     driver: bridge
-    # api:
-  #   build: /home/nurzhan/Desktop/Go/Go_Backend/Go_project/cmd
-  #   command: go run main.go
-  #   volumes:
-  #     - ./golang:/go/src/mymodule
-  #   ports:
-  #     - "8080:8080"
-  #   depends_on:
-
-  #     - postgres-db
