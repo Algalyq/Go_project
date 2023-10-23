@@ -46,17 +46,14 @@ function Aside({opened, setOpened, searchAction, list}){
                   <input type="text" name="search" placeholder="Search..." value={searchText} onChange={onChangeText}/>
              </span>
              <div className='aside-res'>
-                  {
-                    datas && datas.length>0  && datas.map((item, index)=>{
-                      return(
-                      <span key={index}>
-                           <img src={require(`../../../Go_project/settings/media/${item.image}`)} alt="Chair" />
-                           <h1>{item.producttitle}</h1>
-                           <p>{item.price}.00$</p>
+                      
+                      <span>
+                           <img src={require(`../../src/images/product-3.png`)} alt="Chair" />
+                           <h1>Test</h1>
+                           <p>1.00$</p>
                       </span>
-                      )
-                    })
-                  }
+                      
+                  
              </div>
         </aside>
     )
